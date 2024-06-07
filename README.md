@@ -49,7 +49,7 @@ python3 crdb-multi-region-demo/demo.py
 
 **Top-right (Diagram)**
 
-Load up [regions.png](/docs/regions.jpg) in an image viewer
+Load up [regions.png](/docs/regions.png) in an image viewer
 
 ![regions.png](/docs/regions.jpg)
 
