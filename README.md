@@ -51,7 +51,7 @@ python3 crdb-multi-region-demo/demo.py
 
 Load up [regions.png](/docs/regions.png) in an image viewer
 
-![regions.png](/docs/regions.jpg)
+![regions.png](/docs/regions.png)
 
 ## Explain the terminals
 To start the demo, it's a good idea to explain how you will be using the three terminals. You may want to mention that the app is configured to connect to the CockroachDB nodes in its same region through an HAProxy load balancer. However, each region's app is not configured to connect to another region's CockroachDB nodes if its CockroachDB nodes are down. Instead, the app will just enter a retry loop and wait for the CockroachDB nodes to return.
