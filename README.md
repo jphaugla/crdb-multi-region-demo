@@ -7,7 +7,8 @@ This demo demonstrates the latencies expected from the three types of multi-regi
 I recommend opening three terminals, and arrange them like so:
 
 
-**Top-left (controller terminal)**
+**Top-left (controller terminal)** 
+this assumes roachprod-see below for running off githubs
 
 For `roachprod` to work, you need to modify the `CLUSTER` variable in the file `demo.env`:
 ```
@@ -22,6 +23,26 @@ Run these command in this terminal to launch and prepare the cluster and the app
 ```
 source demo.env
 run/init_demo.sh
+```
+
+**Top-left (controller terminal)** 
+this assumes running off the terraform githubs and not using roachprod
+
+* there are scripts in the app node server that define some of these things and then the rest are within the crdb-multi-region-demo github
+* run the MULTIREGION_DEMO_INSTALL script defined in /home/adminuser/.bashrc
+  * this will create the movr_demo database and set it up for three regions and region survivability
+* can connect to database using the provided in .bashrc script *CRDB*
+* create the tables and import the data using provided import.sql script
+```bash
+# login as adminuser
+MULTIREGION_DEMO_INSTALL
+CRDB
+> use movr_demo;
+>\i crdb-multi-region-demo/sql/import.sql
+```
+* run the demo in this region
+```bash
+python3 crdb-multi-region-demo/demo.py
 ```
 
 **Bottom-left (West/OR app)**
