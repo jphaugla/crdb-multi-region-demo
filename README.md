@@ -1,32 +1,14 @@
 # CockroachDB MovR multi-region demo
 
-This demo demonstrates the latencies expected from the three types of multi-region tables (Global, Regional, Regional-by-row) using a modified variant of the MovR app. It then demonstrates what happens to the application when a region fails.
+This demo demonstrates the latencies expected from the three types of multi-region tables (Global, Regional, Regional-by-row) using a modified variant of the MovR app. It then demonstrates what happens to the application when a region fails.  This fork of the demo changes the README directions to work with terraform installation of the demo provided by [Ron Nollen's terraform github](https://github.com/nollenr/AZURE-Terraform-CRDB-Module).  This github uses the USER_DATA in the terraform to setup .bashrc scripts that are referenced here
 
 # Walkthrough of the demo
 ## Setup
 I recommend opening three terminals, and arrange them like so:
 
 
-**Top-left (controller terminal)** 
-this assumes roachprod-see below for running off githubs
-
-For `roachprod` to work, you need to modify the `CLUSTER` variable in the file `demo.env`:
-```
-# You must change this for roachprod to work
-CLUSTER=j4-movr-mr-demo
-
-...
-...
-```
-
-Run these command in this terminal to launch and prepare the cluster and the application servers:
-```
-source demo.env
-run/init_demo.sh
-```
 
 **Top-left (controller terminal)** 
-this assumes running off the terraform githubs and not using roachprod
 
 * there are scripts in the app node server that define some of these things and then the rest are within the crdb-multi-region-demo github
 * run the MULTIREGION_DEMO_INSTALL script defined in /home/adminuser/.bashrc
@@ -40,36 +22,30 @@ CRDB
 > use movr_demo;
 >\i crdb-multi-region-demo/sql/import.sql
 ```
-* run the demo in this region
-```bash
-python3 crdb-multi-region-demo/demo.py
-```
 
 **Bottom-left (West/OR app)**
 
 SSH into the app server in that region (i.e. the 4th server in that region):
 ```
-source demo.env
-roachprod ssh $CLUSTER:8
+MULTIREGION_DEMO_INSTALL
+python3 crdb-multi-region-demo/demo.py
 ```
 
-…then start the app in that region.
-```
-crdb-movr-demo/demo.py
-```
+**Bottom-center (Central/SC app)**
 
+SSH into the app server in that region (i.e. the 4th server in that region):
+```
+MULTIREGION_DEMO_INSTALL
+python3 crdb-multi-region-demo/demo.py
+```
 **Bottom-right (East/SC app)**
 
 SSH into the app server in that region (i.e. the 4th server in that region):
 ```
-source demo.env
-roachprod ssh $CLUSTER:16
+MULTIREGION_DEMO_INSTALL
+python3 crdb-multi-region-demo/demo.py
 ```
 
-…then start the app in that region.
-```
-crdb-movr-demo/demo.py
-```
 
 **Top-right (Diagram)**
 
